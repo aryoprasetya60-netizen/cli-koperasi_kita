@@ -33,8 +33,7 @@ public class ProductController {
                 .isAvailable(request.isAvailable())
                 .build();
 
-        ProductResponse productResponse =
-                productService.saveProduct(newProduct);
+        ProductResponse productResponse = productService.saveProduct(newProduct);
 
         return ResponseUtil.buildResponse(
                 HttpStatus.CREATED,
@@ -54,7 +53,7 @@ public class ProductController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<ProductResponse> updateProduct(
+    public ResponseEntity<CommonResponse<ProductResponse>> updateProduct(
             @PathVariable Long id,
             @RequestBody ProductRequest request
     ) {
@@ -67,9 +66,25 @@ public class ProductController {
         product.setStock(request.getStock());
         product.setIsAvailable(request.isAvailable());
 
-        ProductResponse response =
-                productService.updateProduct(id, product);
+        ProductResponse productResponse = productService.updateProduct(id, product);
 
-        return ResponseEntity.ok(response);
+        return ResponseUtil.buildResponse(
+                HttpStatus.OK,
+                ResponseMessage.SUCCES_UPDATE_DATA,
+                productResponse
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CommonResponse<Void>> deleteProduct(
+            @PathVariable Long id
+    ) {
+        productService.deleteProductById(id);
+
+        return ResponseUtil.buildResponse(
+                HttpStatus.OK,
+                ResponseMessage.SUCCES_DELETE_DATA,
+                null
+        );
     }
 }

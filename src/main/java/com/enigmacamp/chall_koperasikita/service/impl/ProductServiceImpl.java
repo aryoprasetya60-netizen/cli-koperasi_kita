@@ -63,6 +63,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
+    public void deleteProductById(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Product tidak ditemukan")
+                );
+        productRepository.delete(product);
+    }
+
+    @Override
     public List<ProductResponse> searchProducts(SearchProductRequest request) {
         return List.of();
     }
