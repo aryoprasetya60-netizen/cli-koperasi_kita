@@ -17,7 +17,7 @@ public class ProductRequest {
     private BigDecimal price;
     private String category;
     private Integer stock;
-    private boolean isAvailable;
+    private Boolean isAvailable;
     private String createdAt;
     private String createdBy;
     private String updatedAt;

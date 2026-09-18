@@ -3,6 +3,7 @@ package com.enigmacamp.chall_koperasikita.service;
 import com.enigmacamp.chall_koperasikita.dto.request.SearchProductRequest;
 import com.enigmacamp.chall_koperasikita.dto.response.ProductResponse;
 import com.enigmacamp.chall_koperasikita.model.Product;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -11,6 +12,6 @@ public interface ProductService {
     Product getById(Long id);
     ProductResponse updateProduct(Long id, Product product);
     void deleteProductById(Long id);
-    List<ProductResponse> searchProducts(SearchProductRequest request);
+    Page<ProductResponse> searchProductWithPagination(SearchProductRequest request);
 
 }

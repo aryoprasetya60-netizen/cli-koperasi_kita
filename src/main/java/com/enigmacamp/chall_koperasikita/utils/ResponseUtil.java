@@ -1,6 +1,8 @@
 package com.enigmacamp.chall_koperasikita.utils;
 
 import com.enigmacamp.chall_koperasikita.dto.response.CommonResponse;
+import com.enigmacamp.chall_koperasikita.dto.response.PagingResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -14,4 +16,24 @@ public class ResponseUtil {
 
         return ResponseEntity.status(httpStatus).body(response);
     }
+    public static <T> ResponseEntity<CommonResponse<T>> buildResponse(HttpStatus httpStatus, String message, T data, Page<?> page) {
+        PagingResponse pagingResponse = PagingResponse.builder()
+                .currentPage(page.getNumber()+1)
+                .totalPage(page.getTotalPages())
+                .size(page.getSize())
+                .totalElements(page.getTotalElements())
+                .hasNext(page.hasNext())
+                .hasPrevious(page.hasPrevious())
+                .build();
+
+        CommonResponse<T> response = CommonResponse.<T>builder()
+                .statusCode(httpStatus.value())
+                .message(message)
+                .data(data)
+                .paging(pagingResponse)
+                .build();
+
+        return ResponseEntity.status(httpStatus).body(response);
+    }
 }
+
