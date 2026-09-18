@@ -1,5 +1,6 @@
 package com.enigmacamp.chall_koperasikita.service.impl;
 
+import com.enigmacamp.chall_koperasikita.dto.request.SearchProductRequest;
 import com.enigmacamp.chall_koperasikita.dto.response.ProductResponse;
 import com.enigmacamp.chall_koperasikita.mapper.ProductMapper;
 import com.enigmacamp.chall_koperasikita.model.Product;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -25,6 +27,22 @@ public class ProductServiceImpl implements ProductService {
         validation(product);
         Product newProduct = productRepository.save(product);
         return ProductMapper.convertToProductResponse(newProduct);
+    }
+
+    @Override
+    public Product getById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Product dengan ID " + id
+                                        + " tidak ditemukan"
+                        )
+                );
+    }
+
+    @Override
+    public List<ProductResponse> searchProducts(SearchProductRequest request) {
+        return List.of();
     }
 
     public void validation(Product product){
