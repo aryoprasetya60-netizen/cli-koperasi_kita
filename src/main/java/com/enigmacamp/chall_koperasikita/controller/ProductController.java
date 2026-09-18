@@ -23,16 +23,23 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<CommonResponse<ProductResponse>> createProduct(@RequestBody ProductRequest request){
-        Product newProduct = new Product(
-                request.getName()
-                ,request.getDescription()
-                ,request.getPrice()
-                ,request.getCategory()
-                ,request.getStock()
-                ,request.isAvailable());
-        ProductResponse productResponse =productService.saveProduct(newProduct);
+        Product newProduct = Product.builder()
+                .name(request.getName())
+                .description(request.getDescription())
+                .price(request.getPrice())
+                .category(request.getCategory())
+                .stock(request.getStock())
+                .isAvailable(request.isAvailable())
+                .build();
 
-        return ResponseUtil.buildResponse(HttpStatus.CREATED, ResponseMessage.SUCCES_CREATE_DATA, productResponse);
+        ProductResponse productResponse =
+                productService.saveProduct(newProduct);
+
+        return ResponseUtil.buildResponse(
+                HttpStatus.CREATED,
+                ResponseMessage.SUCCES_CREATE_DATA,
+                productResponse
+        );
     }
 
     @GetMapping("/{id}")
