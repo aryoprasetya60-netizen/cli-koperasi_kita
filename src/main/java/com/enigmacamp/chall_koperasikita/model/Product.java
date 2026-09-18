@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+public class Product extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,4 +24,13 @@ public class Product {
     private String category;
     private Integer stock;
     private Boolean isAvailable;
+
+    public Product(String name, String description, BigDecimal price, String category, Integer stock, Boolean isAvailable) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+        this.stock = stock;
+        this.isAvailable = isAvailable;
+    }
 }
