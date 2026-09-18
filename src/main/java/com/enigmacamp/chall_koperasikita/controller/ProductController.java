@@ -43,4 +43,24 @@ public class ProductController {
 
         return ProductMapper.convertToProductResponse(product);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductResponse> updateProduct(
+            @PathVariable Long id,
+            @RequestBody ProductRequest request
+    ) {
+        Product product = new Product();
+
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setPrice(request.getPrice());
+        product.setCategory(request.getCategory());
+        product.setStock(request.getStock());
+        product.setIsAvailable(request.isAvailable());
+
+        ProductResponse response =
+                productService.updateProduct(id, product);
+
+        return ResponseEntity.ok(response);
+    }
 }

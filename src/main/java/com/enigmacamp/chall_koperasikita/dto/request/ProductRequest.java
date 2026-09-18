@@ -19,6 +19,8 @@ public class ProductRequest {
     private Integer stock;
     private boolean isAvailable;
     private String createdAt;
+    private String createdBy;
     private String updatedAt;
+    private String updatedBy;
     private String deletedAt;
 }

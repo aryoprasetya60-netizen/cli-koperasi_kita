@@ -41,6 +41,27 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ProductResponse updateProduct(Long id, Product product) {
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Product tidak ditemukan")
+                );
+
+        existingProduct.setName(product.getName());
+        existingProduct.setDescription(product.getDescription());
+        existingProduct.setPrice(product.getPrice());
+        existingProduct.setCategory(product.getCategory());
+        existingProduct.setStock(product.getStock());
+        existingProduct.setIsAvailable(product.getIsAvailable());
+
+        validation(existingProduct);
+
+        Product updatedProduct = productRepository.save(existingProduct);
+
+        return ProductMapper.convertToProductResponse(updatedProduct);
+    }
+
+    @Override
     public List<ProductResponse> searchProducts(SearchProductRequest request) {
         return List.of();
     }
