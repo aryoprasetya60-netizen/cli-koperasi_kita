@@ -10,6 +10,7 @@ import com.enigmacamp.chall_koperasikita.utils.ResponseUtil;
 import com.enigmacamp.chall_koperasikita.utils.constants.ResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -52,6 +53,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
+    @Transactional
     public ResponseEntity<ProductResponse> updateProduct(
             @PathVariable Long id,
             @RequestBody ProductRequest request
