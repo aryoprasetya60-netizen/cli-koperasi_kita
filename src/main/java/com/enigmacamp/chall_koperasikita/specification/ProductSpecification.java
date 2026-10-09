@@ -43,7 +43,7 @@ public class ProductSpecification {
             if (request.getMaxPrice() != null && !(request.getMaxPrice().compareTo(BigDecimal.ZERO)<0)) {
                 BigDecimal searchMin = request.getMaxPrice();
                 predicates.add(
-                        criteriaBuilder.greaterThanOrEqualTo(
+                        criteriaBuilder.lessThanOrEqualTo(
                                 root.get("price"),
                                 searchMin));
             }
